@@ -44,7 +44,7 @@ decision (see §8).
 
 - **Host:** Scalingo (EU PaaS). Treat the filesystem as **ephemeral** — never
   persist anything to local disk.
-- **App:** Clojure on the JVM. Ring + Jetty, Reitit routing, Selmer templates.
+- **App:** Clojure on the JVM. Ring + Jetty, Reitit routing, Hiccup rendering.
   Built to an uberjar.
 - **Database:** Scalingo managed PostgreSQL. All structured data and content
   lives here. Schema changes go through migrations (Migratus) — never ad hoc.
