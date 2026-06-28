@@ -1,0 +1,16 @@
+{:paths ["src" "resources"]
+
+ :deps {org.clojure/clojure        {:mvn/version "1.12.0"}
+        ring/ring-core             {:mvn/version "1.13.0"}
+        ring/ring-jetty-adapter    {:mvn/version "1.13.0"}
+        metosin/reitit-ring        {:mvn/version "0.7.2"}
+        selmer/selmer              {:mvn/version "1.12.61"}
+        markdown-clj/markdown-clj  {:mvn/version "1.12.1"}}
+
+ :aliases
+ {;; Run the server for local development:  clj -M:dev
+  :dev {:main-opts ["-m" "whitehouse.server"]}
+
+  ;; Build an uberjar for deployment:  clj -T:build uber
+  :build {:deps {io.github.clojure/tools.build {:mvn/version "0.10.5"}}
+          :ns-default build}}}
