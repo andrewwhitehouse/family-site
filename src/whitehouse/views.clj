@@ -47,9 +47,18 @@
     [:p.muted "A private place for the family to share news, photos, video
      and audio. Sign-in required."]]))
 
+(defn- account-nav
+  "Signed-in status shown in the header, or nothing when logged out."
+  [user]
+  (when user
+    [:p.account
+     "Signed in as " [:span.account-name (:name user)]
+     (when (:admin user) [:span.account-badge "admin"])
+     " · " [:a {:href "/logout"} "Sign out"]]))
+
 (defn- layout
   "Wrap page content in the shared document chrome."
-  [{:keys [title content sidebar]}]
+  [{:keys [title content sidebar user]}]
   (str
    "<!DOCTYPE html>\n"
    (h/html
@@ -65,7 +74,8 @@
       [:header.site-header
        [:div.wrap
         [:a.site-title {:href "/"} (:title site)]
-        [:p.site-tagline (:tagline site)]]]
+        [:p.site-tagline (:tagline site)]
+        (account-nav user)]]
       [:main.wrap.layout
        [:div.content content]
        [:aside.sidebar sidebar]]
@@ -73,9 +83,10 @@
        [:div.wrap
         [:p "A private family site. Please don't share links outside the family."]]]]])))
 
-(defn home [{:keys [posts tags]}]
+(defn home [{:keys [posts tags user]}]
   (layout
-   {:content
+   {:user user
+    :content
     [:div.feed
      (for [post posts]
        [:article.post-summary
@@ -86,9 +97,10 @@
         [:p.read-more [:a {:href (post-path post)} "Permalink"]]])]
     :sidebar (sidebar tags)}))
 
-(defn post [{:keys [post tags]}]
+(defn post [{:keys [post tags user]}]
   (layout
    {:title (page-title (:title post))
+    :user user
     :content
     [:article.post-full
      [:header
@@ -98,11 +110,28 @@
      back-link]
     :sidebar (sidebar tags)}))
 
-(defn not-found []
+(defn not-found [& [{:keys [user]}]]
   (layout
    {:title (page-title "Not found")
+    :user user
     :content
     [:article.post-full
      [:h1 "Not found"]
      [:p "That page doesn't exist, or has moved."]
      back-link]}))
+
+(defn login
+  "The sign-in page. Public: the only route reachable while logged out."
+  [{:keys [configured error]}]
+  (layout
+   {:title (page-title "Sign in")
+    :content
+    [:div.login
+     [:div.login-card
+      [:h1 "Family sign-in"]
+      [:p.muted "This is a private family site. Sign in with your "
+       [:strong "@whitehouse.org.uk"] " Google account to continue."]
+      (when error [:p.login-error error])
+      (if configured
+        [:a.login-button {:href "/oauth/start"} "Continue with Google"]
+        [:p.login-error "Sign-in isn't configured on this server yet."])]]}))

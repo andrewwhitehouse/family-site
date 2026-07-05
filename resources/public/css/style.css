@@ -56,6 +56,59 @@ a:hover { text-decoration: underline; }
   font-size: 0.95rem;
 }
 
+.account {
+  margin: 0.5rem 0 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+.account-name { color: var(--ink-soft); font-weight: 600; }
+.account-badge {
+  display: inline-block;
+  margin-left: 0.4rem;
+  padding: 0.02rem 0.4rem;
+  background: var(--accent-bg);
+  color: var(--accent);
+  border-radius: 999px;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* ---- Sign-in ---- */
+.login {
+  display: flex;
+  justify-content: center;
+  padding: 3rem 0;
+}
+.login-card {
+  max-width: 26rem;
+  width: 100%;
+  padding: 2rem;
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  background: #fff;
+  text-align: center;
+}
+.login-card h1 { font-size: 1.4rem; margin: 0 0 0.75rem; }
+.login-button {
+  display: inline-block;
+  margin-top: 1.25rem;
+  padding: 0.6rem 1.25rem;
+  background: var(--accent);
+  color: #fff;
+  border-radius: 6px;
+  font-weight: 600;
+}
+.login-button:hover { text-decoration: none; filter: brightness(1.08); }
+.login-error {
+  margin-top: 1rem;
+  padding: 0.6rem 0.75rem;
+  background: var(--accent-bg);
+  color: var(--accent);
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+
 /* ---- Layout: content + sidebar ---- */
 .layout {
   display: grid;
